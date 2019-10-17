@@ -1,0 +1,30 @@
+﻿using @(Model.SolutionName).Library.Navigation.Pages;
+
+namespace @(Model.SolutionName).Library.Navigation
+{
+    public class PageContainer : BaseSingleton<PageContainer>
+    {
+        @(Model.Properties)
+
+        private static PageContainer instance;
+        public static PageContainer Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new PageContainer();
+                return instance;
+            }
+        }
+
+        private PageContainer() { }
+
+        @(Model.Constructors)
+
+        public void SetDelegate(INavigation _delegate)
+        {
+            @(Model.Delegate)
+        }
+
+    }
+}

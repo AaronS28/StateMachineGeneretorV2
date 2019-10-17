@@ -1,0 +1,165 @@
+﻿using @(Model.SolutionName).Library.Managers;
+using @(Model.SolutionName).Library.Navigation;
+using @(Model.SolutionName).Models;
+using @(Model.SolutionName).Pages;
+using @(Model.SolutionName).Support;
+using @(Model.SolutionName).Views.PopUpViews;
+using SilentiumApps.Xamarin.Base.Base;
+using SilentiumApps.Xamarin.Base.Interfaces;
+using System;
+using System.Collections.Generic;
+using Xamarin.Forms;
+using Xamarin.Forms.GoogleMaps;
+
+namespace @(Model.SolutionName).Managers
+{
+    public class PageManager : BaseSingleton<PageManager>
+    {
+        private NavigationManager MyNavigation;
+        public LayoutPage LayoutPage { get; set; }
+        public LoginPage LoginPage { get; set; }
+
+        private PageManager() { }
+
+        public void Init()
+        {
+            MyNavigation = new NavigationManager();
+
+            MyNavigation.OnPageChange += MyNavigation_OnPageChange;
+            MyNavigation.OnViewChange += MyNavigation_OnViewChange;
+            MyNavigation.OnSetBackButtonVisibility += MyNavigation_OnSetBackButtonVisibility;
+            MyNavigation.OnMultiView += MyNavigation_OnMultiView;
+
+            LoginPage = new LoginPage();
+            LayoutPage = new LayoutPage();
+        }
+
+        public void NotificationReceived(object state, EventArgs args)
+        {
+            viewModel.OnNotificationReceived();
+        }
+
+        public void OnResume()
+        {
+            IViewModel viewModel = ((IViewModel)MyNavigation.GetView()?.BindingContext);
+            viewModel?.OnResume();
+        }
+
+        public void OnNotificationReceived()
+        {
+            IViewModel viewModel = ((IViewModel)MyNavigation.GetView().BindingContext);
+            viewModel.OnNotificationReceived();
+            LayoutPage.LayoutPageMasterViewModel.OnNotificationReceived();
+        }
+
+        private void SetView(ContentView view, PageArgs args)
+        {
+            IViewModel viewModel = ((IViewModel)view.BindingContext);
+            LayoutPage.LayoutPageDetailViewModel.ContentView = view;
+            viewModel.Load(args);
+            LayoutPage.LayoutPageDetailViewModel.Title = viewModel.TitlePage;
+        }
+
+        private void SetBackButton(bool hasBackButton)
+        {
+            LayoutPage.LayoutPageDetailViewModel.ShowButtonBack = hasBackButton;
+        }
+
+        public void InitWithSession()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InitWithOutSession()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DoLogin()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DoLogout()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GoBack(PageArgs args)
+        {
+            MyNavigation.GoBack(args);
+        }
+
+        public void ToggleMenu()
+        {
+            LayoutPage.ToggleMenu();
+        }
+
+        private void MyNavigation_OnViewChange(object sender, System.EventArgs e)
+        {
+            BasePage page = (BasePage)sender;
+            ChangeView(page);
+        }
+
+        private void MyNavigation_OnPageChange(object sender, System.EventArgs e)
+        {
+            BasePage page = (BasePage)sender;
+            SetRefreshButton(false);
+            ChangePage(page);
+        }
+
+        private void MyNavigation_OnSetBackButtonVisibility(object sender, System.EventArgs e)
+        {
+            bool hasBackButton = (bool)sender;
+            SetBackButton(hasBackButton);
+        }
+
+        private void MyNavigation_OnMultiView(object sender, EventArgs e)
+        {
+            BasePage page = (BasePage)sender;
+            SetTabs(page);
+        }
+
+        // Cuando cambio a una pagina distinta
+        private void ChangePage(BasePage page)
+        {
+            SetView(page.GetView(), page.Args);
+            //TODO Custom
+        }
+
+        // Cuando cambio una vista dentro de una misma pagina, Ej. Tabs
+        private void ChangeView(BasePage page)
+        {
+            SetView(page.GetView(), page.Args);
+            //TODO Custom
+        }
+
+        private void SetTabs(BasePage page)
+        {
+            LayoutPage.LayoutPageDetailViewModel.HasTabs = (page.GetViewList().Count > 0);
+            LayoutPage.LayoutPageDetailViewModel.ViewItems = page.GetViewList();
+            LayoutPage.LayoutPageDetailViewModel.SelectedIndex = (page.Args != null) ? page.Args.InternalId : 0;
+        }
+
+        public void OnChangeTab(int index)
+        {
+            MyNavigation.SetView(index);
+            LayoutPage.LayoutPageDetailViewModel.SelectedIndex = index;
+        }
+
+
+        public void SetSellerName(string name)
+        {
+            LayoutPage.LayoutPageMasterViewModel.SellerName = name;
+        }
+
+        public void Refresh()
+        {
+            IViewModel viewModel = ((IViewModel)MyNavigation.GetView().BindingContext);
+            viewModel.Refresh();
+        }
+
+    @(Model.Methods)
+
+    }
+}

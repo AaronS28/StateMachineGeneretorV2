@@ -1,0 +1,26 @@
+﻿using @(Model.SolutionName).Views;
+
+namespace @(Model.SolutionName).Library.Navigation
+{
+    public class ViewContainer
+    {
+        @Model.Properties
+
+        private static ViewContainer instance;
+
+        public static ViewContainer Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new ViewContainer();
+                return instance;
+            }
+        }
+
+        private ViewContainer()
+        {
+            @Model.Constructors
+        }
+    }
+}

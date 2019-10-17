@@ -1,0 +1,67 @@
+﻿using @(Model.SolutionName).Library.Support;
+using System;
+using System.Collections.Generic;
+using Xamarin.Forms;
+
+namespace @(Model.SolutionName).Library.Navigation
+{
+    public class NavigationManager : INavigation
+    {
+        private BasePage CurrentPage = null;
+        private BasePage HomePage = null;
+
+        public event EventHandler OnPageChange;
+        public event EventHandler OnViewChange;
+        public event EventHandler OnSetBackButtonVisibility;
+        public event EventHandler OnMultiView;
+
+        public void Init()
+        {
+            @Model.Init
+        }
+
+        private void SetBackButtonVisibility(bool IsVisible)
+        {
+            OnSetBackButtonVisibility?.Invoke(IsVisible, EventArgs.Empty);
+        }
+
+        public void ChangePage(BasePage newPage, PageArgs args = null, BasePage fromPage = null)
+        {
+            CurrentPage = newPage;
+
+            CurrentPage.From = (fromPage != null) ? fromPage : newPage.From;
+
+            if (args != null)
+            {
+                CurrentPage.Args = args;
+                CurrentPage.SetView(args.ViewId);
+            }
+
+            OnMultiView?.Invoke(CurrentPage, EventArgs.Empty);
+            OnSetBackButtonVisibility?.Invoke((fromPage != null), EventArgs.Empty);
+            OnPageChange?.Invoke(CurrentPage, EventArgs.Empty);
+        }
+
+        public void ChangeView(BasePage newPage)
+        {
+            OnViewChange?.Invoke(newPage, EventArgs.Empty);
+        }
+
+        public int GetViewId()
+        {
+            return CurrentPage.GetViewId();
+        }
+
+        public ContentView GetView()
+        {
+            return CurrentPage.GetView();
+        }
+
+        public List<ViewItem> GetListView()
+        {
+            return CurrentPage.GetViewList();
+        }
+
+        @(Model.Methods)
+    }
+}

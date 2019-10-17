@@ -1,0 +1,16 @@
+﻿using @(Model.SolutionName).ViewModels.Views;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace @(Model.SolutionName).Views
+{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class @(Model.ClassName) : ContentView
+    {
+        public AccountDetailView()
+        {
+            InitializeComponent();
+            BindingContext = new @(Model.Properties)();
+        }
+    }
+}

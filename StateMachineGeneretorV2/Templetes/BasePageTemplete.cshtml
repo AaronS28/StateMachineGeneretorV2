@@ -1,0 +1,66 @@
+﻿using @(Model.SolutionName).Library.Navigation.Pages;
+using @(Model.SolutionName).Library.Support;
+using System.Collections.Generic;
+using Xamarin.Forms;
+
+namespace @(Model.SolutionName).Library.Navigation
+{
+    public abstract class BasePage
+    {
+        protected INavigation Delegate { get; set; }
+
+        protected int ViewId { get; set; }
+        protected ContentView CurrentView { get; set; }
+        protected List<ViewItem>
+    Views { get; set; }
+
+    public BasePage From { get; set; }
+    public PageArgs Args { get; set; }
+
+    public bool HasBack
+    {
+    get
+    {
+    return (From != null);
+    }
+    }
+
+    public void SetDelegate(INavigation _delegate)
+    {
+    Delegate = _delegate;
+    }
+
+    public ContentView GetView()
+    {
+    if (CurrentView != null)
+    {
+    return CurrentView;
+    }
+
+    return null;
+    }
+
+    public int GetViewId()
+    {
+    return ViewId;
+    }
+
+    public List<ViewItem>
+        GetViewList()
+        {
+        return Views;
+        }
+
+        public virtual void SetView(int index, bool forceChange = false)
+        {
+        if ((Views != null && Views.Count != 0 && index < Views.Count && ViewId != index) || forceChange)
+        {
+        CurrentView = Views[index].View;
+        ViewId = index;
+        Delegate.ChangeView(this);
+        }
+        }
+
+        @(Model.Methods)
+        }
+        }

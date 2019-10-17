@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Templetes\BasePageTemplete.cshtml" />
+    <None Remove="Templetes\ContentViewCSTemplete.cshtml" />
+    <None Remove="Templetes\ContentViewTemplete.cshtml" />
+    <None Remove="Templetes\INavigationTemplete.cshtml" />
+    <None Remove="Templetes\MethodTemplate.cshtml" />
+    <None Remove="Templetes\NavigationManagerInitTemplete.cshtml" />
+    <None Remove="Templetes\NavigationManagerTemplete.cshtml" />
+    <None Remove="Templetes\PageConstructor.cshtml" />
+    <None Remove="Templetes\PageContainerDelegateView.cshtml" />
+    <None Remove="Templetes\PageContainerInitView.cshtml" />
+    <None Remove="Templetes\PageContainerPropertyTemplete.cshtml" />
+    <None Remove="Templetes\PageContainerTemplete.cshtml" />
+    <None Remove="Templetes\PageManagerMethodTemplate.cshtml" />
+    <None Remove="Templetes\PageManagerTemplate.cshtml" />
+    <None Remove="Templetes\PageTemplate.cshtml" />
+    <None Remove="Templetes\ViewAtributeTemplate.cshtml" />
+    <None Remove="Templetes\ViewContainerInitView.cshtml" />
+    <None Remove="Templetes\ViewContainerPropertyTemplete.cshtml" />
+    <None Remove="Templetes\ViewContainerTemplete.cshtml" />
+    <None Remove="Templetes\ViewModelGenerator.cshtml" />
+    <None Remove="Templetes\VirtualMethodTemplate.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templetes\ContentViewCSTemplete.cshtml" />
+    <EmbeddedResource Include="Templetes\PageContainerDelegateView.cshtml" />
+    <EmbeddedResource Include="Templetes\PageManagerTemplate.cshtml" />
+    <EmbeddedResource Include="Templetes\PageContainerPropertyTemplete.cshtml" />
+    <EmbeddedResource Include="Templetes\PageContainerInitView.cshtml" />
+    <EmbeddedResource Include="Templetes\PageConstructor.cshtml" />
+    <EmbeddedResource Include="Templetes\ViewModelGenerator.cshtml" />
+    <EmbeddedResource Include="Templetes\ContentViewTemplete.cshtml" />
+    <EmbeddedResource Include="Templetes\BasePageTemplete.cshtml" />
+    <EmbeddedResource Include="Templetes\INavigationTemplete.cshtml" />
+    <EmbeddedResource Include="Templetes\MethodTemplate.cshtml" />
+    <EmbeddedResource Include="Templetes\NavigationManagerInitTemplete.cshtml" />
+    <EmbeddedResource Include="Templetes\NavigationManagerTemplete.cshtml" />
+    <EmbeddedResource Include="Templetes\PageContainerTemplete.cshtml" />
+    <EmbeddedResource Include="Templetes\PageTemplate.cshtml" />
+    <EmbeddedResource Include="Templetes\ViewAtributeTemplate.cshtml" />
+    <EmbeddedResource Include="Templetes\ViewContainerInitView.cshtml" />
+    <EmbeddedResource Include="Templetes\ViewContainerPropertyTemplete.cshtml" />
+    <EmbeddedResource Include="Templetes\ViewContainerTemplete.cshtml" />
+    <EmbeddedResource Include="Templetes\PageManagerMethodTemplate.cshtml" />
+    <EmbeddedResource Include="Templetes\VirtualMethodTemplate.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RazorEngine.NetCore" Version="2.2.2" />
+  </ItemGroup>
+
+</Project>

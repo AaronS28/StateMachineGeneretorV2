@@ -1,0 +1,10 @@
+﻿using @(Model.SolutionName).Library.Support;
+
+namespace @(Model.SolutionName).Library.Navigation
+{
+    public interface INavigation
+    {
+        void ChangePage(BasePage newPage, PageArgs args = null, BasePage fromPage = null);
+        void ChangeView(BasePage newPage);
+    }
+}
