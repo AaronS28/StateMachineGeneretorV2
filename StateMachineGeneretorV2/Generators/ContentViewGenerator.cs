@@ -11,7 +11,6 @@ namespace StateMachineGeneretorV2.Generators
 {
     public class ContentViewGenerator : BaseGenerator
     {
-
         public static void GenereteContentsViews(StateMachine stateMachine, string destinyFolder)
         {
             foreach (string view in stateMachine.Views)
@@ -28,8 +27,18 @@ namespace StateMachineGeneretorV2.Generators
                 fileModel.ClassName = viewName;
                 fileModel.SolutionName = ConfigValues.SolutionName;
                 var a = ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.ViewAtributeTemplate.cshtml");
-                CreateFile(destinyFolder + "\\" + fileModel.ClassName + ".xaml", CreateFileFromTemplete(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.ContentViewTemplete.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
-                CreateContentViewCS(viewName, destinyFolder);
+               
+                if (!Directory.Exists(destinyFolder))
+                {
+                    DirectoryInfo newDirectory = Directory.CreateDirectory(destinyFolder);
+                    CreateFile(newDirectory + "\\" + fileModel.ClassName + ".xaml", CreateFileFromTemplete(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.ContentViewTemplete.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+                    CreateContentViewCS(viewName, newDirectory.ToString());
+                }
+                else 
+                {
+                    CreateFile(destinyFolder + "\\" + fileModel.ClassName + ".xaml", CreateFileFromTemplete(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.ContentViewTemplete.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+                    CreateContentViewCS(viewName, destinyFolder);
+                }
             }
             catch (Exception)
             {

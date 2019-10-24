@@ -26,7 +26,16 @@ namespace StateMachineGeneretorV2.Generators
                 FileModel fileModel = new FileModel();
                 fileModel.ClassName = viewModelName;
                 fileModel.SolutionName = ConfigValues.SolutionName;
-                CreateFile(destinyFolder + "\\" + fileModel.ClassName + ".cs", CreateFileFromTemplete(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.ViewModelGenerator.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+
+                if (!Directory.Exists(destinyFolder))
+                {
+                    DirectoryInfo newDirectory = Directory.CreateDirectory(destinyFolder);
+                    CreateFile(newDirectory + "\\" + fileModel.ClassName + ".cs", CreateFileFromTemplete(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.ViewModelGenerator.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+                }
+                else
+                {
+                    CreateFile(destinyFolder + "\\" + fileModel.ClassName + ".cs", CreateFileFromTemplete(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.ViewModelGenerator.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+                }
             }
             catch (Exception)
             {

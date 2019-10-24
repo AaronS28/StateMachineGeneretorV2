@@ -14,14 +14,23 @@ namespace StateMachineGeneretorV2.Generators
 
         const string fileName = "PageContainer.cs";
 
-        public static void CreatePageContainer(StateMachine stateMachine, string destiniyFolder)
+        public static void CreatePageContainer(StateMachine stateMachine, string destinyFolder)
         {
             PageContainerModel fileModel = new PageContainerModel();
-            fileModel.ClassName = ConfigValues.SolutionName;
+            fileModel.SolutionName = ConfigValues.SolutionName;
             fileModel.Properties = CreatePageContainerProperties(stateMachine.Pages, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.PageContainerPropertyTemplete.cshtml"), System.Text.Encoding.UTF8).ReadToEnd());
             fileModel.Constructors = CreatePageContainerConstructor(stateMachine.Pages, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.PageContainerInitView.cshtml"), System.Text.Encoding.UTF8).ReadToEnd());
             fileModel.Delegate = CreatePageContainerSetDelegate(stateMachine.Pages, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.PageContainerDelegateView.cshtml"), System.Text.Encoding.UTF8).ReadToEnd());
-            CreateFile(destiniyFolder+ "\\PageContainer.cs", CreatePageContainerClass(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.PageContainerTemplete.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+
+            if (!Directory.Exists(destinyFolder))
+            {
+                DirectoryInfo newDirectory = Directory.CreateDirectory(destinyFolder);
+                CreateFile(newDirectory + "\\PageContainer.cs", CreatePageContainerClass(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.PageContainerTemplete.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+            }
+            else 
+            {
+                CreateFile(destinyFolder + "\\PageContainer.cs", CreatePageContainerClass(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.PageContainerTemplete.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+            }
         }
 
         private static string CreatePageContainerProperties(List<PageModel> views, string template)

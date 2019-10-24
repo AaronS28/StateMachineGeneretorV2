@@ -12,12 +12,21 @@ namespace StateMachineGeneretorV2.Generators
     public class PageManagerGenerator : BaseGenerator
     {
         const string fileName = "PageManager.cs";
-        public static void CreatePageManager(StateMachine stateMachine , string destiniyFolder)
+        public static void CreatePageManager(StateMachine stateMachine , string destinyFolder)
         {
             FileModel fileModel = new FileModel();
             fileModel.SolutionName = ConfigValues.SolutionName;
             fileModel.Methods = CreateMethods(stateMachine.BaseMethods, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.PageManagerMethodTemplate.cshtml"), System.Text.Encoding.UTF8).ReadToEnd());
-            CreateFile(destiniyFolder + "\\" + fileName, CreatePageManagerClass(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.PageManagerTemplate.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+            
+            if (!Directory.Exists(destinyFolder))
+            {
+                DirectoryInfo newDirectory = Directory.CreateDirectory(destinyFolder);
+                CreateFile(newDirectory + "\\" + fileName, CreatePageManagerClass(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.PageManagerTemplate.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+            }
+            else 
+            {
+                CreateFile(destinyFolder + "\\" + fileName, CreatePageManagerClass(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.PageManagerTemplate.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+            }
         }
 
         private static string CreateMethods(List<string> methodNames, string template)

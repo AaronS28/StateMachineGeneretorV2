@@ -29,15 +29,22 @@ namespace StateMachineGeneretorV2
             StateMachine stateMachine = new StateMachine(originPath);
             stateMachine.Run();
 
-            PageGeneretor.GeneretePages(stateMachine, destinyPath);
-            BasePageGenerator.CreateBasePage(stateMachine, destinyPath);
-            ViewContainerGenerator.CreateViewContainer(stateMachine, destinyPath);
-            PageManagerGenerator.CreatePageManager(stateMachine, destinyPath);
-            ContentViewGenerator.GenereteContentsViews(stateMachine, destinyPath);
-            ViewModelGenerator.GenereteViewModels(stateMachine, destinyPath);
-            PageContainerGenerator.CreatePageContainer(stateMachine, destinyPath);
+            string PageManagerPath = destinyPath + "\\" + ConfigValues.SolutionName + "\\Library\\Managers";
+            string ViewModelPath = destinyPath + "\\" + ConfigValues.SolutionName + "\\ViewModels\\Views";
+            string ContainerPath = destinyPath + "\\" + ConfigValues.SolutionName + "\\Library\\Navigation";
+            string ContentViewPath = destinyPath + "\\" + ConfigValues.SolutionName + "\\Views";
+            string BasePath = destinyPath + "\\" + ConfigValues.SolutionName + "\\Library\\Navigation\\Pages";
+
+            PageGeneretor.GeneretePages(stateMachine, BasePath);
+            BasePageGenerator.CreateBasePage(stateMachine, BasePath);
+            ViewContainerGenerator.CreateViewContainer(stateMachine, ContainerPath);
+            PageManagerGenerator.CreatePageManager(stateMachine, PageManagerPath);
+            ContentViewGenerator.GenereteContentsViews(stateMachine, ContentViewPath);
+            ViewModelGenerator.GenereteViewModels(stateMachine, ViewModelPath);
+            PageContainerGenerator.CreatePageContainer(stateMachine, ContainerPath);
+
+            Console.WriteLine("Presione una tecla para salir.");
+            Console.ReadLine();
         }
-
-
     }
 }

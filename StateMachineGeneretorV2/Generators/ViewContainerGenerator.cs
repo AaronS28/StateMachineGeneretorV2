@@ -14,13 +14,22 @@ namespace StateMachineGeneretorV2.Generators
 
         const string fileName = "ViewContainer.cs";
 
-        public static void CreateViewContainer(StateMachine stateMachine, string destiniyFolder)
+        public static void CreateViewContainer(StateMachine stateMachine, string destinyFolder)
         {
             FileModel fileModel = new FileModel();
-            fileModel.ClassName = ConfigValues.SolutionName;
+            fileModel.SolutionName = ConfigValues.SolutionName;
             fileModel.Properties = CreateViewContainerProperties(stateMachine.Views, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.ViewContainerPropertyTemplete.cshtml"), System.Text.Encoding.UTF8).ReadToEnd());
             fileModel.Constructors = CreateViewContainerConstructor(stateMachine.Views, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.ViewContainerInitView.cshtml"), System.Text.Encoding.UTF8).ReadToEnd());
-            CreateFile(destiniyFolder+ "\\ViewContainer.cs", CreateViewContainerClass(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.ViewContainerTemplete.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+
+            if (!Directory.Exists(destinyFolder))
+            {
+                DirectoryInfo newDirectory = Directory.CreateDirectory(destinyFolder);
+                CreateFile(newDirectory + "\\ViewContainer.cs", CreateViewContainerClass(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.ViewContainerTemplete.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+            }
+            else 
+            {
+                CreateFile(destinyFolder + "\\ViewContainer.cs", CreateViewContainerClass(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.ViewContainerTemplete.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+            }
         }
 
         private static string CreateViewContainerProperties(List<string> views, string template)

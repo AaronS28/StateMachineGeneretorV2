@@ -34,7 +34,16 @@ namespace StateMachineGeneretorV2
                 fileModel.Constructors = CreatePageConstructor(page, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.PageConstructor.cshtml"), System.Text.Encoding.UTF8).ReadToEnd());
                 fileModel.Properties = CreateViewsAtributte(page.SubPages, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.ViewAtributeTemplate.cshtml") ,System.Text.Encoding.UTF8).ReadToEnd());
                 fileModel.Methods = CreateOverrideMethods(page.Methods, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.MethodTemplate.cshtml"), System.Text.Encoding.UTF8).ReadToEnd());
-                CreateFile(destinyFolder + "\\" + fileModel.ClassName+ ".cs", CreatePageClass(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.PageTemplate.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+
+                if (!Directory.Exists(destinyFolder))
+                {
+                    DirectoryInfo newDirectory = Directory.CreateDirectory(destinyFolder);
+                    CreateFile(newDirectory + "\\" + fileModel.ClassName + ".cs", CreatePageClass(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.PageTemplate.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+                }
+                else 
+                {
+                    CreateFile(destinyFolder + "\\" + fileModel.ClassName + ".cs", CreatePageClass(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.PageTemplate.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+                }
             }
             catch (Exception)
             {

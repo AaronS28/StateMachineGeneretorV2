@@ -12,12 +12,21 @@ namespace StateMachineGeneretorV2.Generators
     public class BasePageGenerator : BaseGenerator
     {
         const string fileName = "BasePage.cs";
-        public static void CreateBasePage(StateMachine stateMachine , string destiniyFolder)
+        public static void CreateBasePage(StateMachine stateMachine , string destinyFolder)
         {
             FileModel fileModel = new FileModel();
             fileModel.SolutionName = ConfigValues.SolutionName;
             fileModel.Methods = CreateVirtualMethods(stateMachine.BaseMethods, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.VirtualMethodTemplate.cshtml"), System.Text.Encoding.UTF8).ReadToEnd());
-            CreateFile(destiniyFolder + "\\" + fileName, CreateBasePageClass(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.BasePageTemplete.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+            
+            if (!Directory.Exists(destinyFolder))
+            {
+                DirectoryInfo newDirectory = Directory.CreateDirectory(destinyFolder);
+                CreateFile(newDirectory + "\\" + fileName, CreateBasePageClass(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.BasePageTemplete.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+            }
+            else
+            {
+                CreateFile(destinyFolder + "\\" + fileName, CreateBasePageClass(fileModel, new StreamReader(ConfigValues.Assembly.GetManifestResourceStream("StateMachineGeneretorV2.Templetes.BasePageTemplete.cshtml"), System.Text.Encoding.UTF8).ReadToEnd()));
+            }
         }
 
         private static string CreateVirtualMethods(List<string> methodNames, string template)
