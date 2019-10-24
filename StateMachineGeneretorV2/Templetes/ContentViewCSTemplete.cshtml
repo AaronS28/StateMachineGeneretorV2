@@ -7,7 +7,7 @@ namespace @(Model.SolutionName).Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class @(Model.ClassName) : ContentView
     {
-        public AccountDetailView()
+        public @(Model.ClassName)()
         {
             InitializeComponent();
             BindingContext = new @(Model.Properties)();
