@@ -67,6 +67,5 @@ namespace StateMachineGeneretorV2.Generators
                 throw;
             }
         }
-
     }
 }

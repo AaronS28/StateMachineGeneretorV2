@@ -47,7 +47,5 @@ namespace StateMachineGeneretorV2.Generators
         {
             return Engine.Razor.RunCompile(templete, Guid.NewGuid().ToString(), null, fileModel);
         }
-
-
     }
 }

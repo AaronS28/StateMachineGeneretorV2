@@ -17,6 +17,5 @@ namespace StateMachineGeneretorV2
             Methods = new List<string>();
             SubPages = new List<string>();
         }
-
     }
 }

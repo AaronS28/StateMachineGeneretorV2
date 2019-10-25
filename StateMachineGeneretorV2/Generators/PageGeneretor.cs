@@ -94,6 +94,5 @@ namespace StateMachineGeneretorV2
         {
             return Engine.Razor.RunCompile(template, Guid.NewGuid().ToString(), null, page) + "\n";
         }
-
     }
 }

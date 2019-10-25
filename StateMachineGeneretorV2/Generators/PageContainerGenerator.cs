@@ -11,7 +11,6 @@ namespace StateMachineGeneretorV2.Generators
 {
     public class PageContainerGenerator : BaseGenerator
     {
-
         const string fileName = "PageContainer.cs";
 
         public static void CreatePageContainer(StateMachine stateMachine, string destinyFolder)
@@ -71,8 +70,6 @@ namespace StateMachineGeneretorV2.Generators
         {
             return Engine.Razor.RunCompile(templete, Guid.NewGuid().ToString(), null, fileModel);
         }
-
-
     }
 
     public class PageContainerModel : FileModel

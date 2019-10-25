@@ -11,7 +11,6 @@ namespace StateMachineGeneretorV2.Generators
 {
     public class ViewContainerGenerator : BaseGenerator
     {
-
         const string fileName = "ViewContainer.cs";
 
         public static void CreateViewContainer(StateMachine stateMachine, string destinyFolder)
